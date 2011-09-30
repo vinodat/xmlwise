@@ -81,14 +81,26 @@ public final class Plist
 	 */
 	public static String toXml(Map<String, Object> data)
 	{
-		StringBuilder builder = new StringBuilder(
-				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-				"<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" " +
-				"\"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n" +
-				"<plist version=\"1.0\">");
-		builder.append(PLIST.objectToXml(data).toXml());
-		return builder.append("</plist>").toString();
+        return toPlist(data);
 	}
+
+    /**
+     * Convert an object to a plist xml string
+     * using the default mapping.
+     *
+     * @param o the nested object to store as a plist.
+     * @return the resulting xml as a string.
+     */
+    public static String toPlist(Object o)
+    {
+        StringBuilder builder = new StringBuilder(
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" " +
+                "\"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n" +
+                "<plist version=\"1.0\">");
+        builder.append(PLIST.objectToXml(o).toXml());
+        return builder.append("</plist>").toString();
+    }
 
 	/**
 	 * Store a nested {@code map<String, Object>} as a plist using the default mapping.
@@ -101,7 +113,19 @@ public final class Plist
 	{
 		store(data, new File(filename));
 	}
-	
+
+    /**
+     * Store an object as a plist using the default mapping.
+     *
+     * @param object the object to store as a plist.
+     * @param filename the destination file to store the data to.
+     * @throws IOException if there was an IO error saving the file.
+     */
+    public static void storeObject(Object object, String filename) throws IOException
+    {
+        storeObject(object, new File(filename));
+    }
+
 	/**
 	 * Store a nested {@code map<String, Object>} as a plist using the default mapping.
 	 *
@@ -112,17 +136,30 @@ public final class Plist
 	@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
 	public static void store(Map<String, Object> data, File file) throws IOException
 	{
-		FileOutputStream stream = null;
-		try
-		{
-			stream = new FileOutputStream(file);
-			stream.write(toXml(data).getBytes());
-		}
-		finally
-		{
-			silentlyClose(stream);
-		}
+        storeObject(data, file);
 	}
+
+    /**
+     * Store an object as a plist using the default mapping.
+     *
+     * @param data the nested data to store as a plist.
+     * @param file the destination File to store the data to.
+     * @throws IOException if there was an IO error saving the file.
+     */
+    @SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
+    public static void storeObject(Object data, File file) throws IOException
+    {
+        FileOutputStream stream = null;
+        try
+        {
+            stream = new FileOutputStream(file);
+            stream.write(toPlist(data).getBytes());
+        }
+        finally
+        {
+            silentlyClose(stream);
+        }
+    }
 
 	/**
 	 * Utility method to close a closeable.
@@ -150,8 +187,21 @@ public final class Plist
 	 */
 	public static Map<String, Object> fromXml(String xml) throws XmlParseException
 	{
-		return PLIST.parse(Xmlwise.createXml(xml));
+		return PLIST.parse(Xmlwise.createSimpleXml(xml));
 	}
+
+    /**
+     * Create an object from a plist xml string using the default mapping.
+     *
+     * @param xml the plist xml data as a string.
+     * @return the resulting map as read from the plist data.
+     * @throws XmlParseException if the plist could not be properly parsed.
+     */
+    public static Object objectFromXml(String xml) throws XmlParseException
+    {
+        return PLIST.parseObject(Xmlwise.createSimpleXml(xml));
+    }
+
 
 	/**
 	 * Create a nested {@code map<String, Object>} from a plist xml file using the default mapping.
@@ -163,8 +213,21 @@ public final class Plist
 	 */
 	public static Map<String, Object> load(File file) throws XmlParseException, IOException
 	{
-		return PLIST.parse(Xmlwise.loadXml(file));
+		return PLIST.parse(Xmlwise.loadSimpleXml(file));
 	}
+
+    /**
+     * Create an object from a plist xml file using the default mapping.
+     *
+     * @param file the File containing the the plist xml.
+     * @return the resulting object as read from the plist data.
+     * @throws XmlParseException if the plist could not be properly parsed.
+     * @throws IOException if there was an issue reading the plist file.
+     */
+    public static Object loadObject(File file) throws XmlParseException, IOException
+    {
+        return PLIST.parseObject(Xmlwise.loadSimpleXml(file));
+    }
 
 	/**
 	 * Create a nested {@code map<String, Object>} from a plist xml file using the default mapping.
@@ -178,6 +241,19 @@ public final class Plist
 	{
 		return load(new File(filename));
 	}
+
+    /**
+     * Create an object from a plist xml file using the default mapping.
+     *
+     * @param filename the file containing the the plist xml.
+     * @return the resulting object as read from the plist data.
+     * @throws XmlParseException if the plist could not be properly parsed.
+     * @throws IOException if there was an issue reading the plist file.
+     */
+    public static Object loadObject(String filename) throws XmlParseException, IOException
+    {
+        return loadObject(new File(filename));
+    }
 
 	/**
 	 * Create a plist handler.
@@ -272,6 +348,23 @@ public final class Plist
 		}
 		return dict;
 	}
+
+    /**
+     * Parses a plist to an object
+     *
+     * @param element the top plist element.
+     * @return the resulting object.
+     * @throws XmlParseException if there was any error parsing the xml.
+     */
+    Object parseObject(XmlElement element) throws XmlParseException
+    {
+        if (!"plist".equalsIgnoreCase(element.getName()))
+            throw new XmlParseException("Expected plist top element, was: " + element.getName());
+
+        // Assure that the top element is a dict and the single child element.
+        if (element.size() != 1) throw new XmlParseException("Expected single child element.");
+        return parseElement(element.getFirst());
+    }
 
 	/**
 	 * Parses a plist top element into a map dictionary containing all the data
@@ -430,7 +523,8 @@ public final class Plist
 	 */
 	static byte[] base64decode(String base64)
 	{
-		base64 = base64.trim();
+        // Remove all whitespace.
+		base64 = base64.replaceAll("\\s", "");
 		int endTrim = base64.endsWith("==") ? 2 : base64.endsWith("=") ? 1 : 0;
 		int length = (base64.length() / 4) * 3 - endTrim;
 		base64 = base64.replace('=', 'A');
