@@ -12,7 +12,7 @@ import java.io.File;
 
 /**
  * Xmlwise convenience methods for loading xml documents and render them into
- * XmlElement trees.
+ * XmlElement trees. 
  *
  * @author Christoffer Lerno
  */
