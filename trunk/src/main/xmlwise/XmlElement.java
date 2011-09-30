@@ -336,4 +336,35 @@ public class XmlElement extends LinkedList<XmlElement>
 	{
 		return getAttributes().containsKey(attribute);
 	}
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        XmlElement that = (XmlElement) o;
+
+        if (m_attributes != null ? !m_attributes.equals(that.m_attributes) : that.m_attributes != null) return false;
+        if (m_name != null ? !m_name.equals(that.m_name) : that.m_name != null) return false;
+        if (m_value != null ? !m_value.equals(that.m_value) : that.m_value != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = super.hashCode();
+        result = 31 * result + (m_attributes != null ? m_attributes.hashCode() : 0);
+        result = 31 * result + (m_value != null ? m_value.hashCode() : 0);
+        result = 31 * result + (m_name != null ? m_name.hashCode() : 0);
+        return result;
+    }
+
+    public String toString()
+    {
+        return "[" + m_name + " = " + m_value + "; " + m_attributes + "; " + super.toString() + "]";
+    }
 }

@@ -58,7 +58,15 @@ public class PlistTest extends TestCase
 		return m_plist.parse(Xmlwise.createXml("<plist><dict>" + string + "</dict></plist>"));
 	}
 
-	public static void testParseNonPlist()
+    public void testParseProblematicPlist() throws Exception
+    {
+        Plist.fromXml("<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"><plist version=\"1.0\"><dict><key>general</key><dict><key>cbid</key><string>451631</string><key>hrid</key><string>sp2624</string><key>firstName</key><string>SUDHARANI</string><key>lastName</key><string>PARVANGADA</string><key>primaryPhone</key><string>+1 7324208039</string><key>primaryEmail</key><string>sparvang@us.ibm.com</string><key>pagerEmailMaxlen</key><string>110</string><key>pagerEmailMaxmsgs</key><string>5</string><key>celEmailMaxlen</key><string>110</string><key>celEmailMaxmsgs</key><string>5</string><key>lastModifier</key><string>451471</string><key>dateModified</key><string>23-Sep-2009 04:58:20 PM</string><key>dateModifiedLong</key><string>1253739500000</string><key>timeZone</key><string>US/Eastern</string><key>timeZoneId</key><string>13</string><key>permission</key><string>15</string><key>privilege</key><string>AOTS_User_Group</string><key>source</key><string>C-Bus User</string></dict><key>pmoc</key><array><dict><key>startHour</key><string>0</string><key>endHour</key><string>24</string><key>startMinute</key><string>0</string><key>endMinute</key><string>0</string><key>dayBit</key><string>126</string><key>active</key><string>Yes</string><key>contactMode</key><string>1</string><key>contactModeString</key><string>Primary_Email</string><key>source</key><string>Profile</string><key>field</key><string>Primary Email</string><key>workTime</key><string>0:0-24:0</string><key>advancedRetry</key><string>5</string><key>advancedRetryTimes</key><string>1</string><key>pmc_id</key><string>1297706</string></dict></array><key>roles</key><array><dict><key>role</key><string>RequesterId</string><key>roleId</key><string>7</string><key>roleValue</key><string>sp2624</string><key>active</key><string>Y</string><key>activeBits</key><string>1</string><key>isImplicit</key><string>N</string></dict></array><key>implicitRoles</key><array><dict><key>role</key><string>LastModifiedBy</string><key>roleId</key><string>23</string><key>roleValue</key><string>sp2624</string><key>active</key><string>Y</string><key>activeBits</key><string>2</string><key>isImplicit</key><string>Y</string></dict></array></dict></plist>");
+        Plist.fromXml("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                      "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n" +
+                      "<plist version=\"1.0\"><dict><key>pages</key><array><dict><key>uid</key><string>page1</string><key>widgets</key><array><dict><key>fullscreen</key><false/><key>content</key><string>0.13,0.27,0.72,0.34</string><key>uid</key><string>page1w01</string><key>showoverlay</key><false/><key>popup</key><false/><key>showicon</key><true/><key>hotspot</key><string>0.26,0.76,0.58,0.2</string><key>autostart</key><false/><key>kind</key><string>video</string><key>url</key><string>backstage_conv.mp4</string></dict></array><key>number</key><integer>1</integer></dict><dict><key>uid</key><string>page7</string><key>widgets</key><array><dict><key>fullscreen</key><true/><key>content</key><string>0.0,0.0,0.5,0.5</string><key>uid</key><string>page7w01</string><key>showoverlay</key><true/><key>popup</key><false/><key>showicon</key><false/><key>hotspot</key><string>0.21,0.45,0.57,0.08</string><key>autostart</key><false/><key>kind</key><string>link</string><key>url</key><string>http://www.elle.it</string></dict></array><key>number</key><integer>7</integer></dict><dict><key>uid</key><string>page8</string><key>widgets</key><array><dict><key>fullscreen</key><false/><key>content</key><string>0.05,0.07,0.91,0.55</string><key>uid</key><string>page8w01</string><key>showoverlay</key><true/><key>popup</key><true/><key>showicon</key><false/><key>hotspot</key><string>0.04,0.86,0.09,0.07</string><key>autostart</key><false/><key>kind</key><string>link</string><key>url</key><string>http://www.hachettepubblicita.it</string></dict></array><key>number</key><integer>8</integer></dict><dict><key>uid</key><string>page11</string><key>widgets</key><array><dict><key>fullscreen</key><false/><key>content</key><string>0.0,0.0,0.5,0.5</string><key>uid</key><string>page11w01</string><key>showoverlay</key><false/><key>popup</key><false/><key>showicon</key><true/><key>hotspot</key><string>0.44,0.27,0.48,0.36</string><key>autostart</key><false/><key>kind</key><string>audio</string><key>url</key><string>06-Eh...già.mp3</string></dict></array><key>number</key><integer>11</integer></dict><dict><key>uid</key><string>page13</string><key>widgets</key><array><dict><key>fullscreen</key><false/><key>content</key><string>0.19,0.03,0.64,0.64</string><key>uid</key><string>page13w01</string><key>showoverlay</key><false/><key>popup</key><true/><key>showicon</key><true/><key>hotspot</key><string>0.51,0.87,0.16,0.05</string><key>autostart</key><false/><key>kind</key><string>pdf</string><key>url</key><string>PROVA_MM_01m01.pdf</string></dict><dict><key>fullscreen</key><false/><key>content</key><string>0.0,0.0,0.5,0.5</string><key>uid</key><string>page13w11</string><key>showoverlay</key><false/><key>popup</key><true/><key>showicon</key><true/><key>hotspot</key><string>0.78,0.65,0.05,0.05</string><key>autostart</key><false/><key>kind</key><string>jumpto</string><key>url</key><string>78</string></dict></array><key>number</key><integer>13</integer></dict></array></dict></plist>");
+    }
+
+	public void testParseNonPlist()
 	{
 		try
 		{
@@ -158,8 +166,18 @@ public class PlistTest extends TestCase
 		assertEquals("Foobar", new String(Plist.base64decode(" " + Plist.base64encode("Foobar".getBytes()))));
 		assertEquals("Foobar!", new String(Plist.base64decode(Plist.base64encode("Foobar!".getBytes()))));
 		assertEquals("Foobar!!", new String(Plist.base64decode(Plist.base64encode("Foobar!!".getBytes()))));
+        assertEquals("Foobar!!", new String(Plist.base64decode("Rm9v\n YmF yISE=")));
 	}
 
+    public void testObjectDecodeAndEncode() throws Exception
+    {
+        assertEquals("A String!", Plist.objectFromXml(Plist.toPlist("A String!")));
+        File temp = File.createTempFile("plist", "foo");
+        temp.deleteOnExit();
+        Plist.storeObject(123, temp.getAbsolutePath());
+        assertEquals(123, Plist.loadObject(temp.getAbsolutePath()));
+    }
+    
 	public void testEncode() throws Exception
 	{
 		assertEquals("Rm9vYmFy", Plist.base64encode("Foobar".getBytes()));
