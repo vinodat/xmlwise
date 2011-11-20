@@ -187,7 +187,7 @@ public final class Plist
 	 */
 	public static Map<String, Object> fromXml(String xml) throws XmlParseException
 	{
-		return PLIST.parse(Xmlwise.createSimpleXml(xml));
+		return PLIST.parse(Xmlwise.createXml(xml));
 	}
 
     /**
@@ -199,7 +199,7 @@ public final class Plist
      */
     public static Object objectFromXml(String xml) throws XmlParseException
     {
-        return PLIST.parseObject(Xmlwise.createSimpleXml(xml));
+        return PLIST.parseObject(Xmlwise.createXml(xml));
     }
 
 
@@ -213,7 +213,7 @@ public final class Plist
 	 */
 	public static Map<String, Object> load(File file) throws XmlParseException, IOException
 	{
-		return PLIST.parse(Xmlwise.loadSimpleXml(file));
+		return PLIST.parse(Xmlwise.loadXml(file));
 	}
 
     /**
@@ -226,7 +226,7 @@ public final class Plist
      */
     public static Object loadObject(File file) throws XmlParseException, IOException
     {
-        return PLIST.parseObject(Xmlwise.loadSimpleXml(file));
+        return PLIST.parseObject(Xmlwise.loadXml(file));
     }
 
 	/**
