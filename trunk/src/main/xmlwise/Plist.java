@@ -187,8 +187,32 @@ public final class Plist
 	 */
 	public static Map<String, Object> fromXml(String xml) throws XmlParseException
 	{
-		return PLIST.parse(Xmlwise.createXml(xml));
+		return fromXmlElement(Xmlwise.createXml(xml));
 	}
+
+    /**
+     * Create a nested {@code map<String, Object>} from an XmlElement using the default mapping.
+     *
+     * @param element the plist xml data as a string.
+     * @return the resulting map as read from the plist data.
+     * @throws XmlParseException if the plist could not be properly parsed.
+     */
+    public static Map<String, Object> fromXmlElement(XmlElement element) throws XmlParseException
+    {
+        return PLIST.parse(element);
+    }
+
+    /**
+     * Create an object from an XmlElement using the default mapping.
+     *
+     * @param element the element that represents the plist.
+     * @return the resulting map as read from the plist data.
+     * @throws XmlParseException if the plist could not be properly parsed.
+     */
+    public static Object objectFromXmlElement(XmlElement element) throws XmlParseException
+    {
+        return PLIST.parseObject(element);
+    }
 
     /**
      * Create an object from a plist xml string using the default mapping.
@@ -199,7 +223,7 @@ public final class Plist
      */
     public static Object objectFromXml(String xml) throws XmlParseException
     {
-        return PLIST.parseObject(Xmlwise.createXml(xml));
+        return objectFromXmlElement(Xmlwise.createXml(xml));
     }
 
 
@@ -213,7 +237,7 @@ public final class Plist
 	 */
 	public static Map<String, Object> load(File file) throws XmlParseException, IOException
 	{
-		return PLIST.parse(Xmlwise.loadXml(file));
+		return fromXmlElement(Xmlwise.loadXml(file));
 	}
 
     /**
@@ -226,7 +250,7 @@ public final class Plist
      */
     public static Object loadObject(File file) throws XmlParseException, IOException
     {
-        return PLIST.parseObject(Xmlwise.loadXml(file));
+        return objectFromXmlElement(Xmlwise.loadXml(file));
     }
 
 	/**
