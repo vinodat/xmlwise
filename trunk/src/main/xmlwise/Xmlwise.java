@@ -175,20 +175,6 @@ public class Xmlwise
 		return new XmlElement(loadDocument(file).getDocumentElement());
 	}
 
-    /**
-     * Loads a document from file and transforms it into an XmlElement tree
-     * using XmlMiniParser.
-     *
-     * @param file the file to load.
-     * @return an XmlElement tree rendered from the file.
-     * @throws XmlParseException if parsing the file failed for some reason.
-     * @throws IOException if there were any problems reading from the file.
-     */
-    public static XmlElement loadSimpleXml(File file) throws XmlParseException, IOException
-    {
-        return new XmlElement(loadDocument(file).getDocumentElement());
-    }
-
 	/**
 	 * Loads a document from file and transforms it into an XmlElement tree.
 	 *
@@ -202,19 +188,6 @@ public class Xmlwise
 		return loadXml(new File(filename));
 	}
 
-    /**
-     * Loads a document from file and transforms it into an XmlElement tree using XmlMiniParser.
-     *
-     * @param filename the path to the file.
-     * @return an XmlElement tree rendered from the file.
-     * @throws XmlParseException if parsing the file failed for some reason.
-     * @throws IOException if there were any problems reading from the file.
-     */
-    public static XmlElement loadSimpleXml(String filename) throws XmlParseException, IOException
-    {
-        return loadXml(new File(filename));
-    }
-
 	/**
 	 * Creates a document from a string and transforms it into an XmlElement tree.
 	 *
@@ -227,16 +200,6 @@ public class Xmlwise
 		return new XmlElement(createDocument(xml).getDocumentElement());
 	}
 
-    /**
-     * Creates a document from a string and transforms it into an XmlElement tree using XmlMiniParser.
-     *
-     * @param xml the xml as a string.
-     * @return an XmlElement tree rendered from the file.
-     * @throws XmlParseException if parsing the xml failed to validate for some reason.
-     */
-    public static XmlElement createSimpleXml(String xml) throws XmlParseException
-    {
-        return new XmlElement(createDocument(xml).getDocumentElement());
-    }
+  
 
 }
