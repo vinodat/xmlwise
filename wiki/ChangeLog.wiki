@@ -9,10 +9,7 @@ First release, taken from very stable code.
 
 Added plist support to read and write apple property lists.
 
-In progress
+===1.2===
 
-===2.0===
-
-- Simple built in XML-parser
 - Plist serialization of objects
 - Bug fixes
