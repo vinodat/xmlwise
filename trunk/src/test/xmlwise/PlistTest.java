@@ -163,6 +163,12 @@ public class PlistTest extends TestCase
 
 	public void testDecode() throws Exception
 	{
+        assertEquals("Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure.", new String(Plist.base64decode("TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5v " +
+                                                           "\tdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0aGlz\n" +
+                                                           "IHN  pbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaCBpcyBhIGx1c3Qgb2Yg\n" +
+                                                           "dGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZGVsaWdodCBpbiB0aGUgY29udGlu\n" +
+                                                           "dWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRo\n" +
+                                                           "ZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4=")));
 		assertEquals("Foobar", new String(Plist.base64decode(" " + Plist.base64encode("Foobar".getBytes()))));
 		assertEquals("Foobar!", new String(Plist.base64decode(Plist.base64encode("Foobar!".getBytes()))));
 		assertEquals("Foobar!!", new String(Plist.base64decode(Plist.base64encode("Foobar!!".getBytes()))));
@@ -184,6 +190,7 @@ public class PlistTest extends TestCase
 		assertEquals("Rm9vYmFyIQ==", Plist.base64encode("Foobar!".getBytes()));
 		assertEquals("Rm9vYmFyISE=", Plist.base64encode("Foobar!!".getBytes()));
 	}
+
 
 	public void testSilentlyClose() throws Exception
 	{
