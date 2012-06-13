@@ -549,7 +549,16 @@ public final class Plist
 	{
         // Remove all whitespace.
 		base64 = base64.replaceAll("\\s", "");
-		int endTrim = base64.endsWith("==") ? 2 : base64.endsWith("=") ? 1 : 0;
+        int endTrim = 0;
+        if (base64.endsWith("==")) {
+            endTrim = 2;
+            base64 = base64.substring(0, base64.length() - 2) + "AA";
+        } else if (base64.endsWith("="))
+        {
+            endTrim = 1;
+            base64 = base64.substring(0, base64.length() - 1) + "A";
+        }
+        if (base64.length() % 4 != 0) throw new IllegalArgumentException("Illegal base64 string, length " + base64.length());
 		int length = (base64.length() / 4) * 3 - endTrim;
 		base64 = base64.replace('=', 'A');
 		byte[] result = new byte[length];
